@@ -46,10 +46,10 @@ class Panel(ScreenPanel):
             'pressure': self._gtk.Button("settings", _("Pressure Advance"), "color2"),
             'retraction': self._gtk.Button("settings", _("Retraction"), "color1")
         }
-        self.buttons['extrude'].connect("clicked", self.check_min_temp, "extrude", "+")
-        self.buttons['load'].connect("clicked", self.check_min_temp, "load_unload", "+")
-        self.buttons['unload'].connect("clicked", self.check_min_temp, "load_unload", "-")
-        self.buttons['retract'].connect("clicked", self.check_min_temp, "extrude", "-")
+        self.buttons['extrude'].connect("clicked", self.extrude, "+")
+        self.buttons['load'].connect("clicked", self.load_unload, "+")
+        self.buttons['unload'].connect("clicked", self.load_unload, "-")
+        self.buttons['retract'].connect("clicked", self.extrude, "-")
         self.buttons['temperature'].connect("clicked", self.menu_item_clicked, {
             "panel": "temperature"
         })
@@ -145,7 +145,7 @@ class Panel(ScreenPanel):
         filament_sensors = self._printer.get_filament_sensors()
         sensors = Gtk.Grid(valign=Gtk.Align.CENTER, row_spacing=5, column_spacing=5)
         with_switches = (
-            len(filament_sensors) < 4
+            len(filament_sensors) <= 4
             and not (self._screen.vertical_mode and self._screen.height < 600)
         )
         for s, x in enumerate(filament_sensors):

@@ -93,23 +93,23 @@ class BasePanel(ScreenPanel):
         self.control['time_box'] = Gtk.Box(halign=Gtk.Align.END)
         self.control['time_box'].pack_end(self.control['time'], True, True, 10)
 
-        self.battery_icons = self.load_battery_icons()
-        self.labels['battery'] = Gtk.Label()
-        self.labels['battery_icon'] = self._gtk.Image()
-        self.labels['battery_icon'].set_from_pixbuf(self.battery_icons['unknown'])
-        self.control['battery_box'] = Gtk.Box(halign=Gtk.Align.END)
-        self.control['battery_box'].set_no_show_all(True)
-        self.control['battery_box'].add(self.labels['battery'])
-        self.control['battery_box'].add(self.labels['battery_icon'])
-        for widget in self.control['battery_box']:
-            widget.show()
+        # self.battery_icons = self.load_battery_icons()
+        # self.labels['battery'] = Gtk.Label()
+        # self.labels['battery_icon'] = self._gtk.Image()
+        # self.labels['battery_icon'].set_from_pixbuf(self.battery_icons['unknown'])
+        # self.control['battery_box'] = Gtk.Box(halign=Gtk.Align.END)
+        # self.control['battery_box'].set_no_show_all(True)
+        # self.control['battery_box'].add(self.labels['battery'])
+        # self.control['battery_box'].add(self.labels['battery_icon'])
+        # for widget in self.control['battery_box']:
+        #     widget.show()
 
         self.titlebar = Gtk.Box(spacing=5, valign=Gtk.Align.CENTER)
         self.titlebar.get_style_context().add_class("title_bar")
         self.titlebar.add(self.control['temp_box'])
         self.titlebar.add(self.titlelbl)
         self.titlebar.add(self.control['time_box'])
-        self.titlebar.add(self.control['battery_box'])
+        # self.titlebar.add(self.control['battery_box'])
         self.set_title(title)
 
         # Main layout
@@ -154,8 +154,8 @@ class BasePanel(ScreenPanel):
                 size = self._gtk.img_scale * self.abscale * 1.4
             button.set_image(self._gtk.Image(name, size, size))
 
-        self.battery_icons = self.load_battery_icons()
-        self.battery_percentage()
+        # self.battery_icons = self.load_battery_icons()
+        # self.battery_percentage()
 
     def show_heaters(self, show=True):
         for child in self.control['temp_box'].get_children():
@@ -231,8 +231,8 @@ class BasePanel(ScreenPanel):
     def activate(self):
         if self.time_update is None:
             self.time_update = GLib.timeout_add_seconds(1, self.update_time)
-        if self.battery_update is None:
-            self.battery_update = GLib.timeout_add_seconds(60, self.battery_percentage)
+        # if self.battery_update is None:
+        #     self.battery_update = GLib.timeout_add_seconds(60, self.battery_percentage)
 
     def add_content(self, panel):
         printing = self._printer and self._printer.state in {"printing", "paused"}
